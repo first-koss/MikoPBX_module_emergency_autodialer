@@ -17,15 +17,15 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-
-namespace Modules\ModuleTemplate\App\Controllers;
+namespace Modules\EmergencyAutodialer\App\Controllers;
 
 use MikoPBX\AdminCabinet\Controllers\BaseController;
+use MikoPBX\AdminCabinet\Providers\AssetProvider;
 use MikoPBX\Modules\PbxExtensionUtils;
 
-class AdditionalPageController extends BaseController
+class CampaignController extends BaseController
 {
-    private string $moduleUniqueID = 'ModuleTemplate';
+    private string $moduleUniqueID = 'EmergencyAutodialer';
     private string $moduleDir;
 
     /**
@@ -40,11 +40,16 @@ class AdditionalPageController extends BaseController
     }
 
     /**
-     * Index page controller
+     * Renders campaigns placeholder page.
      */
     public function indexAction(): void
     {
-        $this->view->pick('Modules/'.$this->moduleUniqueID.'/AdditionalPage/index');
-    }
+        $headerCollectionCSS = $this->assets->collection(AssetProvider::HEADER_CSS);
+        $headerCollectionCSS->addCss('css/cache/'.$this->moduleUniqueID.'/emergency-autodialer-index.css', true);
 
+        $footerCollectionJS = $this->assets->collection(AssetProvider::FOOTER_JS);
+        $footerCollectionJS->addJs('js/cache/'.$this->moduleUniqueID.'/emergency-autodialer-index.js', true);
+
+        $this->view->pick('Modules/'.$this->moduleUniqueID.'/EmergencyAutodialerCampaign/index');
+    }
 }

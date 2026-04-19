@@ -17,7 +17,7 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace Modules\ModuleTemplate\Lib;
+namespace Modules\EmergencyAutodialer\Lib;
 
 
 use MikoPBX\Common\Handlers\CriticalErrorsHandler;
@@ -27,11 +27,11 @@ use MikoPBX\Core\Workers\WorkerBase;
 require_once 'Globals.php';
 
 /**
- * Class ModuleTemplate
+ * Worker for delayed dialing jobs.
  */
-class WorkerTemplateMain extends WorkerBase
+class WorkerEmergencyAutodialerDialer extends WorkerBase
 {
-    protected TemplateMain $templateMain;
+    protected EmergencyAutodialerMain $autodialerMain;
 
     /**
      * Start point for the worker.
@@ -41,7 +41,7 @@ class WorkerTemplateMain extends WorkerBase
      */
     public function start(array $argv): void
     {
-        $this->templateMain = new TemplateMain();
+        $this->autodialerMain = new EmergencyAutodialerMain();
         $client = new BeanstalkClient(self::class);
         $client->subscribe($this->makePingTubeName(self::class), [$this, 'pingCallBack']);
         $client->subscribe(self::class, [$this, 'beanstalkCallback']);
@@ -58,12 +58,12 @@ class WorkerTemplateMain extends WorkerBase
     public function beanstalkCallback(BeanstalkClient $message): void
     {
         $receivedMessage = json_decode($message->getBody(), true);
-        $this->templateMain->processBeanstalkMessage($receivedMessage);
+        $this->autodialerMain->processBeanstalkMessage($receivedMessage);
     }
 }
 
 // Start worker process
-$workerClassname = WorkerTemplateMain::class;
+$workerClassname = WorkerEmergencyAutodialerDialer::class;
 if (isset($argv) && count($argv) > 1) {
     cli_set_process_title($workerClassname);
     try {

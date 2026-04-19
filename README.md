@@ -1,11 +1,5 @@
-# MikoPBX extension module template #
+# EmergencyAutodialer
 
-*Read this in other languages: [English](README.md), [Русский](readme.ru.md).*
+MikoPBX module skeleton for emergency voice auto notification.
 
-## Module description ##
-
-We are working on the module developing guide here [https://docs.mikopbx.com](https://docs.mikopbx.com/mikopbx-development/)
-
-
-### Questions ###
-You are welcome to our telegram channel for developers [@mikopbx_dev](https://t.me/joinchat/AAPn5xSqZIpQnNnCAa3bBw)
+The module is shown in the MikoPBX interface as "Auto notification" in English and "Автооповещение" in Russian. The Russian architecture notes and implementation roadmap are maintained in [readme.ru.md](readme.ru.md).

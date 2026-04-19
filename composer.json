@@ -1,12 +1,12 @@
 {
-    "name": "mikopbx/moduletemplate",
-    "description": "ModuleTemplate",
+    "name": "mikopbx/emergency-autodialer",
+    "description": "Emergency autodialer and voice notification module for MikoPBX",
     "require": {
         "mikopbx/core": ">=2023.2.160"
     },
     "autoload": {
         "psr-4": {
-            "Modules\\ModuleTemplate\\": "/"
+            "Modules\\EmergencyAutodialer\\": "/"
         }
     },
     "type": "application",
@@ -22,12 +22,12 @@
         "uc"
     ],
     "license": "GPL-3.0-or-later",
-    "homepage": "https://github.com/mikopbx/ModuleTemplate",
+    "homepage": "https://github.com/mikopbx/EmergencyAutodialer",
     "support": {
         "email": "help@mikopbx.com",
         "wiki": "https://wiki.mikopbx.com",
         "issues": "https://github.com/mikopbx/Core/issues",
-        "source": "https://github.com/mikopbx/Core",
+        "source": "https://github.com/mikopbx/EmergencyAutodialer",
         "forum": "https://qa.askozia.ru",
         "chat": "https://t.me/mikopbx_dev"
     },

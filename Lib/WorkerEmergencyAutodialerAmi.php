@@ -17,7 +17,7 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace Modules\ModuleTemplate\Lib;
+namespace Modules\EmergencyAutodialer\Lib;
 
 use MikoPBX\Common\Handlers\CriticalErrorsHandler;
 use MikoPBX\Core\Asterisk\AsteriskManager;
@@ -28,12 +28,12 @@ require_once 'Globals.php';
 
 
 /**
- * Worker class for Template AMI.
+ * Worker for EmergencyAutodialer AMI events.
  */
-class WorkerTemplateAMI extends WorkerBase
+class WorkerEmergencyAutodialerAmi extends WorkerBase
 {
     protected AsteriskManager $am;
-    protected TemplateMain $templateMain;
+    protected EmergencyAutodialerMain $autodialerMain;
 
     /**
      * Starts the listener work.
@@ -42,7 +42,7 @@ class WorkerTemplateAMI extends WorkerBase
      */
     public function start(array $argv): void
     {
-        $this->templateMain = new TemplateMain();
+        $this->autodialerMain = new EmergencyAutodialerMain();
         $this->am = Util::getAstManager();
         $this->setFilter();
         $this->am->addEventHandler("userevent", [$this, "callback"]);
@@ -69,8 +69,7 @@ class WorkerTemplateAMI extends WorkerBase
         $params   = ['Operation' => 'Add', 'Filter' => 'UserEvent: ' . $pingTube];
         $this->am->sendRequestTimeout('Filter', $params);
 
-        // Interception event - it is example event. It happens when PBX receive inbound call
-        $params = ['Operation' => 'Add', 'Filter' => 'UserEvent: Interception'];
+        $params = ['Operation' => 'Add', 'Filter' => 'UserEvent: EmergencyAutodialer'];
         return $this->am->sendRequestTimeout('Filter', $params);
     }
 
@@ -85,17 +84,17 @@ class WorkerTemplateAMI extends WorkerBase
             return;
         }
 
-        if (stripos($parameters['UserEvent'],'Interception' ) === false) {
+        if (stripos($parameters['UserEvent'],'EmergencyAutodialer' ) === false) {
             return;
         }
 
-        $this->templateMain->processAmiMessage($parameters);
+        $this->autodialerMain->processAmiMessage($parameters);
     }
 
 }
 
 // Start worker process
-$workerClassname = WorkerTemplateAMI::class;
+$workerClassname = WorkerEmergencyAutodialerAmi::class;
 if (isset($argv) && count($argv) > 1) {
     cli_set_process_title($workerClassname);
     try {

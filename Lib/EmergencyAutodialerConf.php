@@ -17,14 +17,14 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace Modules\ModuleTemplate\Lib;
+namespace Modules\EmergencyAutodialer\Lib;
 
 use MikoPBX\Common\Models\PbxSettings;
 use MikoPBX\Core\Workers\Cron\WorkerSafeScriptsCore;
 use MikoPBX\Modules\Config\ConfigClass;
 use MikoPBX\PBXCoreREST\Lib\PBXApiResult;
 
-class TemplateConf extends ConfigClass
+class EmergencyAutodialerConf extends ConfigClass
 {
 
     /**
@@ -39,8 +39,8 @@ class TemplateConf extends ConfigClass
             $data['model'] === PbxSettings::class
             && $data['recordId'] === 'PBXLanguage'
         ) {
-            $templateMain = new TemplateMain();
-            $templateMain->startAllServices(true);
+            $autodialerMain = new EmergencyAutodialerMain();
+            $autodialerMain->startAllServices(true);
         }
     }
 
@@ -54,11 +54,11 @@ class TemplateConf extends ConfigClass
         return [
             [
                 'type'   => WorkerSafeScriptsCore::CHECK_BY_BEANSTALK,
-                'worker' => WorkerTemplateMain::class,
+                'worker' => WorkerEmergencyAutodialerDialer::class,
             ],
             [
                 'type'   => WorkerSafeScriptsCore::CHECK_BY_AMI,
-                'worker' => WorkerTemplateAMI::class,
+                'worker' => WorkerEmergencyAutodialerAmi::class,
             ],
         ];
     }
@@ -77,17 +77,17 @@ class TemplateConf extends ConfigClass
         $action = strtoupper($request['action']);
         switch ($action) {
             case 'CHECK':
-                $templateMain = new TemplateMain();
-                $res          = $templateMain->checkModuleWorkProperly();
+                $autodialerMain = new EmergencyAutodialerMain();
+                $res            = $autodialerMain->checkModuleWorkProperly();
                 break;
             case 'RELOAD':
-                $templateMain = new TemplateMain();
-                $templateMain->startAllServices(true);
+                $autodialerMain = new EmergencyAutodialerMain();
+                $autodialerMain->startAllServices(true);
                 $res->success = true;
                 break;
             default:
                 $res->success    = false;
-                $res->messages[] = 'API action not found in moduleRestAPICallback ModuleTemplate';
+                $res->messages[] = 'API action not found in moduleRestAPICallback EmergencyAutodialer';
         }
 
         return $res;
@@ -102,20 +102,34 @@ class TemplateConf extends ConfigClass
      *
      * @return void
      */
-    public function onBeforeHeaderMenuShow(array &$menuItems):void
+    public function onBeforeHeaderMenuShow(array &$menuItems): void
     {
-        $menuItems['module_template_AdditionalMenuItem']=[
-            'caption'=>'module_template_AdditionalMenuItem',
-            'iconclass'=>'',
-            'submenu'=>[
-                '/module-template/additional-page'=>[
-                    'caption' => 'module_template_AdditionalSubMenuItem',
-                    'iconclass' => 'gear',
-                    'action' => 'index',
-                    'param' => '',
-                    'style' => '',
+        $menuItems['emergency_autodialer_MenuItem'] = [
+            'caption'   => 'emergency_autodialer_MenuItem',
+            'iconclass' => 'bullhorn',
+            'submenu'   => [
+                '/emergency-autodialer/campaign/index' => [
+                    'caption'   => 'emergency_autodialer_Campaigns',
+                    'iconclass' => 'tasks',
+                    'action'    => 'index',
+                    'param'     => '',
+                    'style'     => '',
                 ],
-            ]
+                '/emergency-autodialer/settings/index' => [
+                    'caption'   => 'emergency_autodialer_Settings',
+                    'iconclass' => 'gear',
+                    'action'    => 'index',
+                    'param'     => '',
+                    'style'     => '',
+                ],
+                '/emergency-autodialer/diagnostics/index' => [
+                    'caption'   => 'emergency_autodialer_Diagnostics',
+                    'iconclass' => 'heartbeat',
+                    'action'    => 'index',
+                    'param'     => '',
+                    'style'     => '',
+                ],
+            ],
         ];
     }
 }

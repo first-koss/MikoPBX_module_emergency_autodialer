@@ -16,31 +16,16 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-const ModuleTemplateIndex = {
-	var1:'foo',
-	$var2: $('.foo'),
-	$moduleStatus: $('#status'),
-	$statusToggle: $('#module-status-toggle'),
-	$disabilityFields: $('.disability'),
-	initialize(){
-		ModuleTemplateIndex.cbOnChangeStatusToggle();
-		window.addEventListener('ModuleStatusChanged', ModuleTemplateIndex.cbOnChangeStatusToggle);
-	},
-	/**
-	 * Change some form elements classes depends of module status
-	 */
-	cbOnChangeStatusToggle() {
-		if (ModuleTemplateIndex.$statusToggle.checkbox('is checked')) {
-			ModuleTemplateIndex.$disabilityFields.removeClass('disabled');
-			ModuleTemplateIndex.$moduleStatus.show();
-		} else {
-			ModuleTemplateIndex.$disabilityFields.addClass('disabled');
-			ModuleTemplateIndex.$moduleStatus.hide();
-		}
-	},
+const EmergencyAutodialerIndex = {
+	$checkboxes: $('.ui.checkbox'),
+	$dropdowns: $('.ui.dropdown'),
 
+	initialize() {
+		EmergencyAutodialerIndex.$checkboxes.checkbox();
+		EmergencyAutodialerIndex.$dropdowns.dropdown();
+	},
 };
 
 $(document).ready(() => {
-	ModuleTemplateIndex.initialize();
+	EmergencyAutodialerIndex.initialize();
 });

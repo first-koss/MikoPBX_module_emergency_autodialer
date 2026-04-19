@@ -1,4 +1,3 @@
-<?php
 /*
  * MikoPBX - free phone system for small business
  * Copyright © 2017-2023 Alexey Portnov and Nikolay Beketov
@@ -17,18 +16,16 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace Modules\EmergencyAutodialer\Setup;
+const EmergencyAutodialerIndex = {
+	$checkboxes: $('.ui.checkbox'),
+	$dropdowns: $('.ui.dropdown'),
 
-use MikoPBX\Modules\Setup\PbxExtensionSetupBase;
+	initialize() {
+		EmergencyAutodialerIndex.$checkboxes.checkbox();
+		EmergencyAutodialerIndex.$dropdowns.dropdown();
+	},
+};
 
-/**
- * Class PbxExtensionSetup
- * Module installer and uninstaller
- *
- * @package Modules\EmergencyAutodialer\Setup
- */
-class PbxExtensionSetup extends PbxExtensionSetupBase
-{
-
-
-}
+$(document).ready(() => {
+	EmergencyAutodialerIndex.initialize();
+});

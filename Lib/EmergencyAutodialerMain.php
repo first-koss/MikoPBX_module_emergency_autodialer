@@ -17,17 +17,16 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace Modules\ModuleTemplate\Lib;
+namespace Modules\EmergencyAutodialer\Lib;
 
 
 use MikoPBX\Core\System\Processes;
-use MikoPBX\Core\System\Util;
 use MikoPBX\Core\Workers\Cron\WorkerSafeScriptsCore;
 use MikoPBX\Modules\PbxExtensionBase;
 use MikoPBX\Modules\PbxExtensionUtils;
 use MikoPBX\PBXCoreREST\Lib\PBXApiResult;
 
-class TemplateMain extends PbxExtensionBase
+class EmergencyAutodialerMain extends PbxExtensionBase
 {
     /**
      * Process something received over AsteriskAMI
@@ -75,7 +74,7 @@ class TemplateMain extends PbxExtensionBase
         if ( ! $moduleEnabled) {
             return;
         }
-        $configClass      = new TemplateConf();
+        $configClass      = new EmergencyAutodialerConf();
         $workersToRestart = $configClass->getModuleWorkers();
 
         if ($restart) {
