@@ -20,6 +20,7 @@
 namespace Modules\EmergencyAutodialer\Setup;
 
 use MikoPBX\Modules\Setup\PbxExtensionSetupBase;
+use Modules\EmergencyAutodialer\Models\EmergencyAutodialerScope;
 
 /**
  * Class PbxExtensionSetup
@@ -29,6 +30,47 @@ use MikoPBX\Modules\Setup\PbxExtensionSetupBase;
  */
 class PbxExtensionSetup extends PbxExtensionSetupBase
 {
+    public function installDB(): bool
+    {
+        $result = $this->createSettingsTableByModelsAnnotations();
+        if ($result) {
+            $result = $this->registerNewModule();
+        }
+        if ($result) {
+            $result = $this->addToSidebar();
+        }
+        if ($result) {
+            $result = $this->ensureDefaultScope();
+        }
 
+        return $result;
+    }
 
+    private function ensureDefaultScope(): bool
+    {
+        $scope = EmergencyAutodialerScope::findFirst([
+            'conditions' => 'code = :code:',
+            'bind' => [
+                'code' => EmergencyAutodialerScope::DEFAULT_CODE,
+            ],
+        ]);
+        if ($scope !== null) {
+            return true;
+        }
+
+        $scope = new EmergencyAutodialerScope();
+        $scope->name = 'Основная точка входа';
+        $scope->code = EmergencyAutodialerScope::DEFAULT_CODE;
+        $scope->is_active = 1;
+        $scope->launch_extension = '';
+        $scope->launch_pin = '';
+        $scope->welcome_sound_id = '';
+        $scope->invalid_sound_id = '';
+        $scope->default_parallel_limit = 3;
+        $scope->default_max_attempts = 1;
+        $scope->default_retry_delay_minutes = 10;
+        $scope->default_success_play_seconds = 15;
+
+        return $scope->save();
+    }
 }

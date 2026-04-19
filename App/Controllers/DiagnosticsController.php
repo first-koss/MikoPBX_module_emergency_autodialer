@@ -22,6 +22,14 @@ namespace Modules\EmergencyAutodialer\App\Controllers;
 
 use MikoPBX\AdminCabinet\Controllers\BaseController;
 use MikoPBX\Modules\PbxExtensionUtils;
+use Modules\EmergencyAutodialer\Models\EmergencyAutodialerCallAttempt;
+use Modules\EmergencyAutodialer\Models\EmergencyAutodialerCampaign;
+use Modules\EmergencyAutodialer\Models\EmergencyAutodialerCampaignRecipient;
+use Modules\EmergencyAutodialer\Models\EmergencyAutodialerRecipient;
+use Modules\EmergencyAutodialer\Models\EmergencyAutodialerRecipientList;
+use Modules\EmergencyAutodialer\Models\EmergencyAutodialerScenario;
+use Modules\EmergencyAutodialer\Models\EmergencyAutodialerScenarioList;
+use Modules\EmergencyAutodialer\Models\EmergencyAutodialerScope;
 
 class DiagnosticsController extends BaseController
 {
@@ -44,7 +52,42 @@ class DiagnosticsController extends BaseController
      */
     public function indexAction(): void
     {
+        $this->view->modelStatuses = $this->collectModelStatuses();
         $this->view->pick('Modules/'.$this->moduleUniqueID.'/EmergencyAutodialerDiagnostics/index');
     }
 
+    private function collectModelStatuses(): array
+    {
+        $models = [
+            'EmergencyAutodialerScope' => EmergencyAutodialerScope::class,
+            'EmergencyAutodialerScenario' => EmergencyAutodialerScenario::class,
+            'EmergencyAutodialerRecipientList' => EmergencyAutodialerRecipientList::class,
+            'EmergencyAutodialerRecipient' => EmergencyAutodialerRecipient::class,
+            'EmergencyAutodialerScenarioList' => EmergencyAutodialerScenarioList::class,
+            'EmergencyAutodialerCampaign' => EmergencyAutodialerCampaign::class,
+            'EmergencyAutodialerCampaignRecipient' => EmergencyAutodialerCampaignRecipient::class,
+            'EmergencyAutodialerCallAttempt' => EmergencyAutodialerCallAttempt::class,
+        ];
+
+        $statuses = [];
+        foreach ($models as $name => $className) {
+            try {
+                $statuses[] = [
+                    'name' => $name,
+                    'ready' => true,
+                    'count' => $className::count(),
+                    'error' => '',
+                ];
+            } catch (\Throwable $exception) {
+                $statuses[] = [
+                    'name' => $name,
+                    'ready' => false,
+                    'count' => 0,
+                    'error' => $exception->getMessage(),
+                ];
+            }
+        }
+
+        return $statuses;
+    }
 }

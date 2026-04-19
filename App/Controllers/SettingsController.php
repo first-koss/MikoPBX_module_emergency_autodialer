@@ -22,6 +22,7 @@ namespace Modules\EmergencyAutodialer\App\Controllers;
 use MikoPBX\AdminCabinet\Controllers\BaseController;
 use MikoPBX\AdminCabinet\Providers\AssetProvider;
 use MikoPBX\Modules\PbxExtensionUtils;
+use Modules\EmergencyAutodialer\Models\EmergencyAutodialerScope;
 
 class SettingsController extends BaseController
 {
@@ -46,6 +47,19 @@ class SettingsController extends BaseController
      */
     public function indexAction(): void
     {
+        $this->view->scope = null;
+        $this->view->databaseError = '';
+        try {
+            $this->view->scope = EmergencyAutodialerScope::findFirst([
+                'conditions' => 'code = :code:',
+                'bind' => [
+                    'code' => EmergencyAutodialerScope::DEFAULT_CODE,
+                ],
+            ]);
+        } catch (\Throwable $exception) {
+            $this->view->databaseError = $exception->getMessage();
+        }
+
         $headerCollectionCSS = $this->assets->collection(AssetProvider::HEADER_CSS);
         $headerCollectionCSS->addCss('css/cache/'.$this->moduleUniqueID.'/emergency-autodialer-index.css', true);
 

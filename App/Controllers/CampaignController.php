@@ -22,6 +22,9 @@ namespace Modules\EmergencyAutodialer\App\Controllers;
 use MikoPBX\AdminCabinet\Controllers\BaseController;
 use MikoPBX\AdminCabinet\Providers\AssetProvider;
 use MikoPBX\Modules\PbxExtensionUtils;
+use Modules\EmergencyAutodialer\Models\EmergencyAutodialerCallAttempt;
+use Modules\EmergencyAutodialer\Models\EmergencyAutodialerCampaign;
+use Modules\EmergencyAutodialer\Models\EmergencyAutodialerCampaignRecipient;
 
 class CampaignController extends BaseController
 {
@@ -44,6 +47,22 @@ class CampaignController extends BaseController
      */
     public function indexAction(): void
     {
+        $this->view->databaseError = '';
+        $this->view->counters = [
+            'campaigns' => 0,
+            'campaignRecipients' => 0,
+            'callAttempts' => 0,
+        ];
+        try {
+            $this->view->counters = [
+                'campaigns' => EmergencyAutodialerCampaign::count(),
+                'campaignRecipients' => EmergencyAutodialerCampaignRecipient::count(),
+                'callAttempts' => EmergencyAutodialerCallAttempt::count(),
+            ];
+        } catch (\Throwable $exception) {
+            $this->view->databaseError = $exception->getMessage();
+        }
+
         $headerCollectionCSS = $this->assets->collection(AssetProvider::HEADER_CSS);
         $headerCollectionCSS->addCss('css/cache/'.$this->moduleUniqueID.'/emergency-autodialer-index.css', true);
 
