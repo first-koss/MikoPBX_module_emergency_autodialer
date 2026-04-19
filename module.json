@@ -1,7 +1,7 @@
 {
-  "developer":"MIKO",
+  "developer":"firstkoss",
   "moduleUniqueID":"EmergencyAutodialer",
-  "support_email": "help@miko.ru",
-  "version": "0.2.0",
+  "support_email": "firstkoss@yandex.ru",
+  "version": "0.3.0",
   "min_pbx_version": "2023.2.160"
 }

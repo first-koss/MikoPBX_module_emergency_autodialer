@@ -1,5 +1,5 @@
 {
-    "name": "mikopbx/emergency-autodialer",
+    "name": "firstkoss/emergency-autodialer",
     "description": "Emergency autodialer and voice notification module for MikoPBX",
     "require": {
         "mikopbx/core": ">=2023.2.160"
@@ -22,33 +22,17 @@
         "uc"
     ],
     "license": "GPL-3.0-or-later",
-    "homepage": "https://github.com/mikopbx/EmergencyAutodialer",
+    "homepage": "https://github.com/firstkoss/EmergencyAutodialer",
     "support": {
-        "email": "help@mikopbx.com",
-        "wiki": "https://wiki.mikopbx.com",
-        "issues": "https://github.com/mikopbx/Core/issues",
-        "source": "https://github.com/mikopbx/EmergencyAutodialer",
-        "forum": "https://qa.askozia.ru",
-        "chat": "https://t.me/mikopbx_dev"
+        "email": "firstkoss@yandex.ru",
+        "issues": "https://github.com/firstkoss/EmergencyAutodialer/issues",
+        "source": "https://github.com/firstkoss/EmergencyAutodialer"
     },
     "authors": [
         {
-            "name": "Alexey Portnov",
-            "email": "apor@miko.ru",
-            "homepage": "https://www.facebook.com/PortnovAlexey",
+            "name": "firstkoss",
+            "email": "firstkoss@yandex.ru",
             "role": "Developer"
-        },
-        {
-            "name": "Nikolay Beketov",
-            "email": "nbek@miko.ru",
-            "homepage": "http://facebook.com/jorikfon",
-            "role": "Developer"
-        }
-    ],
-    "funding": [
-        {
-            "type": "patreon",
-            "url": "https://www.patreon.com/mikopbx"
         }
     ],
     "config": {

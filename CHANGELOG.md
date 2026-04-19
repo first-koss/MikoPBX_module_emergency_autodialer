@@ -8,6 +8,34 @@ Versioning follows `MAJOR.MINOR.PATCH`:
 - `MINOR` changes for new module functionality and implementation stages.
 - `PATCH` changes for fixes, translation updates, and small internal improvements.
 
+## [0.3.0] - 2026-04-19
+
+### Added
+
+- Added editable settings form for the default `EmergencyAutodialerScope`.
+- Added server-side validation and saving for:
+  - entry point name;
+  - launch extension;
+  - launch confirmation PIN;
+  - welcome sound identifier;
+  - invalid input sound identifier;
+  - default parallel call limit;
+  - default max attempts;
+  - default retry delay;
+  - default successful playback threshold.
+- Added client-side form validation for settings.
+- Added `third_stage_readme.md` with stage 3 summary, test checklist, and next-stage plan.
+
+### Changed
+
+- Replaced read-only settings view with an editable form.
+- Updated developer metadata to `firstkoss` and support contact to `firstkoss@yandex.ru`.
+- Updated Composer package ownership and support/source URLs to `firstkoss`.
+
+### Not Implemented Yet
+
+- Dropdown selection of MikoPBX sound files. Sound fields currently store identifiers as text until the core sound-file model is connected.
+
 ## [0.2.0] - 2026-04-19
 
 ### Added
