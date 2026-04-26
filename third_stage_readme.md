@@ -93,3 +93,5 @@ Add editable autodialer settings
 - update developer metadata to firstkoss and firstkoss@yandex.ru
 - bump module version to 0.3.0 and document stage 3
 ```
+## Важное уточнение по результатам теста 3 этапа
+ - модуль устанавливается, ссылки на страници настроек, диагностики создания компаний появляются в интерфейсе mikopbx но в них перейти нельзя, переход автоматически редиректит на страницу "сотрудники". Неоюходимо проверить правильность ссылок в модуле
