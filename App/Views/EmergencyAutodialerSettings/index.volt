@@ -1,3 +1,15 @@
+<div class="ui secondary pointing menu">
+    <a class="item {% if activeMenuItem == 'campaign' %}active{% endif %}" href="{{ url(moduleMenu['campaign']) }}">
+        <i class="tasks icon"></i>{{ t._('emergency_autodialer_Campaigns') }}
+    </a>
+    <a class="item {% if activeMenuItem == 'settings' %}active{% endif %}" href="{{ url(moduleMenu['settings']) }}">
+        <i class="gear icon"></i>{{ t._('emergency_autodialer_Settings') }}
+    </a>
+    <a class="item {% if activeMenuItem == 'diagnostics' %}active{% endif %}" href="{{ url(moduleMenu['diagnostics']) }}">
+        <i class="heartbeat icon"></i>{{ t._('emergency_autodialer_Diagnostics') }}
+    </a>
+</div>
+
 <div class="ui dividing header">
     <i class="gear icon"></i>
     {{ t._('emergency_autodialer_Settings') }}
@@ -12,7 +24,7 @@
         {{ t._('emergency_autodialer_NoDefaultScope') }}
     </div>
 {% else %}
-    {{ form('emergency-autodialer/settings/save', 'role': 'form', 'class': 'ui large form', 'id': 'emergency-autodialer-settings-form') }}
+    {{ form(saveActionUrl, 'role': 'form', 'class': 'ui large form', 'id': 'emergency-autodialer-settings-form') }}
         {{ form.render('id') }}
 
         <div class="ui segment">
@@ -78,6 +90,6 @@
             </div>
         </div>
 
-        {{ partial("partials/submitbutton", ['indexurl': 'emergency-autodialer/settings/index']) }}
+        {{ partial("partials/submitbutton", ['indexurl': moduleMenu['settings']]) }}
     {{ endform() }}
 {% endif %}

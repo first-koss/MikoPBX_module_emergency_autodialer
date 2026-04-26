@@ -104,32 +104,9 @@ class EmergencyAutodialerConf extends ConfigClass
      */
     public function onBeforeHeaderMenuShow(array &$menuItems): void
     {
-        $menuItems['emergency_autodialer_MenuItem'] = [
-            'caption'   => 'emergency_autodialer_MenuItem',
-            'iconclass' => 'bullhorn',
-            'submenu'   => [
-                '/emergency-autodialer/campaign/index' => [
-                    'caption'   => 'emergency_autodialer_Campaigns',
-                    'iconclass' => 'tasks',
-                    'action'    => 'index',
-                    'param'     => '',
-                    'style'     => '',
-                ],
-                '/emergency-autodialer/settings/index' => [
-                    'caption'   => 'emergency_autodialer_Settings',
-                    'iconclass' => 'gear',
-                    'action'    => 'index',
-                    'param'     => '',
-                    'style'     => '',
-                ],
-                '/emergency-autodialer/diagnostics/index' => [
-                    'caption'   => 'emergency_autodialer_Diagnostics',
-                    'iconclass' => 'heartbeat',
-                    'action'    => 'index',
-                    'param'     => '',
-                    'style'     => '',
-                ],
-            ],
-        ];
+        // The module entry is already created in the Extensions sidebar.
+        // Keeping a second custom top-level header menu here causes MikoPBX
+        // to place the module in an unexpected section and breaks route
+        // resolution for nested links in some UI states.
     }
 }

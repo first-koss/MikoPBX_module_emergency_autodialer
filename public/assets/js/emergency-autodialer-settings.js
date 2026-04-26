@@ -107,7 +107,7 @@ const EmergencyAutodialerSettings = {
 
 	initializeForm() {
 		Form.$formObj = EmergencyAutodialerSettings.$formObj;
-		Form.url = `${globalRootUrl}emergency-autodialer/settings/save`;
+		Form.url = EmergencyAutodialerSettings.$formObj.attr('action');
 		Form.validateRules = EmergencyAutodialerSettings.validateRules;
 		Form.cbBeforeSendForm = EmergencyAutodialerSettings.cbBeforeSendForm;
 		Form.cbAfterSendForm = EmergencyAutodialerSettings.cbAfterSendForm;

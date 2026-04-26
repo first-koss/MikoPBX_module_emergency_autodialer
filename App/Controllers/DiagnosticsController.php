@@ -22,6 +22,7 @@ namespace Modules\EmergencyAutodialer\App\Controllers;
 
 use MikoPBX\AdminCabinet\Controllers\BaseController;
 use MikoPBX\Modules\PbxExtensionUtils;
+use Modules\EmergencyAutodialer\Lib\EmergencyAutodialerRoutes;
 use Modules\EmergencyAutodialer\Models\EmergencyAutodialerCallAttempt;
 use Modules\EmergencyAutodialer\Models\EmergencyAutodialerCampaign;
 use Modules\EmergencyAutodialer\Models\EmergencyAutodialerCampaignRecipient;
@@ -33,7 +34,7 @@ use Modules\EmergencyAutodialer\Models\EmergencyAutodialerScope;
 
 class DiagnosticsController extends BaseController
 {
-    private string $moduleUniqueID = 'EmergencyAutodialer';
+    private string $moduleUniqueID = EmergencyAutodialerRoutes::MODULE_UNIQUE_ID;
     private string $moduleDir;
 
     /**
@@ -44,6 +45,8 @@ class DiagnosticsController extends BaseController
         $this->moduleDir = PbxExtensionUtils::getModuleDir($this->moduleUniqueID);
         $this->view->logoImagePath = $this->url->get().'assets/img/cache/'.$this->moduleUniqueID.'/logo.svg';
         $this->view->submitMode = null;
+        $this->view->moduleMenu = EmergencyAutodialerRoutes::menu();
+        $this->view->activeMenuItem = 'diagnostics';
         parent::initialize();
     }
 
